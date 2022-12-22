@@ -1,12 +1,12 @@
 # PhpUnit
 
-## Instala as dependências do projeto
+## Instalando as dependências do projeto
 
 ```
-docker-compose run --user $(id -u):$(id -g) --rm composer
+docker-compose run --rm composer
 ```
 
-## Roda os Tests
+## Rodando os Tests
 
 ```
 docker-compose run --rm phpunit
