@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  composer:
+    image: composer:2.4.4
+    container_name: phpunit-estudo-composer
+    volumes:
+      - .:/app
+    restart: on-failure
+    command: install
+
+  phpunit:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: phpunit-estudo
+    environment:
+      - XDEBUG_MODE=coverage
+    volumes:
+      - .:/app
+    working_dir: /app
+    entrypoint: vendor/bin/phpunit
+    command: --coverage-html .coverage-html --coverage-text --do-not-cache-result
+    depends_on:
+      - composer
+
+  db:
+    build:
+      context: docker/mysql
+    container_name: phpunit-estudo-db
+    environment:
+      - MYSQL_DATABASE=phpunit
+      - MYSQL_ROOT_PASSWORD=Senha123
